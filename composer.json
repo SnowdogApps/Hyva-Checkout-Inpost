@@ -1,0 +1,16 @@
+{
+	"name": "snowdog/module-hyva-checkout-inpost",
+	"description": "Hyva Checkout compatybility module for Inpost",
+	"type": "magento2-module",
+	"require": {
+		"smartmage/module-inpost-paczkomaty": "*"
+	},
+	"autoload": {
+		"files": [
+			"src/registration.php"
+		],
+		"psr-4": {
+			"Snowdog\\Hyva\\Checkout\\Inpost\\": "src"
+		}
+	}
+}
