@@ -1,0 +1,31 @@
+<?php declare(strict_types=1);
+
+// phpcs:disable Generic.Files.LineLength
+
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Snowdog\Hyva\Checkout\Inpost\Magewire\Locker $magewire */
+
+?>
+<div>
+    <script>
+        (function () {
+            window.addEventListener('checkout:shipping:method-activate', async () => {
+                hyvaCheckout.shipping.activate('inpostlocker_standard', {
+                    initialize: function () {
+                        document.addEventListener('onpointselect', function (event) {
+                            alert(event.details.name);
+                            $set('locker', event.details.name)
+                        });
+                    }
+                });
+            }, {once: true})
+        })();
+    </script>
+
+    <link rel="stylesheet" href="https://geowidget.inpost.pl/inpost-geowidget.css"/>
+    <script src='https://geowidget.inpost.pl/inpost-geowidget.js' defer></script>
+
+    <inpost-geowidget onpoint="onpointselect" token='<?= $magewire->getGeoToken() ?>' language='pl'
+                      config='parcelcollect'></inpost-geowidget>
+</div>
