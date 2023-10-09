@@ -35,16 +35,25 @@ class Locker extends Component implements EvaluationInterface
         $this->locker = $this->processor->getLockerId();
     }
 
-    public function updatedLocker($value)
-    {
-        $this->processor->setLockerId($value);
-
-        return $value;
-    }
-
     public function getGeoToken(): string
     {
         return $this->configProvider->getShippingConfigData('geowidget_token');
+    }
+
+    public function getGeoJsUrl(): string
+    {
+        return match ($this->configProvider->getMode()) {
+            'test' => 'https://sandbox-easy-geowidget-sdk.easypack24.net/inpost-geowidget.js',
+            'prod' => 'https://geowidget.inpost.pl/inpost-geowidget.js',
+        };
+    }
+
+    public function getGeoCssUrl(): string
+    {
+        return match ($this->configProvider->getMode()) {
+            'test' => 'https://sandbox-easy-geowidget-sdk.easypack24.net/inpost-geowidget.css',
+            'prod' => 'https://geowidget.inpost.pl/inpost-geowidget.css',
+        };
     }
 
     public function evaluateCompletion(EvaluationResultFactory $resultFactory): EvaluationResultInterface
@@ -56,6 +65,8 @@ class Locker extends Component implements EvaluationInterface
         if ($this->locker === null) {
             return $resultFactory->createBlocking(__('Please select locker'));
         }
+
+        $this->processor->setLockerId($this->locker);
 
         return $resultFactory->createSuccess();
     }

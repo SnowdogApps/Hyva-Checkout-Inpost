@@ -13,19 +13,33 @@
             window.addEventListener('checkout:shipping:method-activate', async () => {
                 hyvaCheckout.shipping.activate('inpostlocker_standard', {
                     initialize: function () {
+                        if (Magewire.find('checkout.shipping.method.inpostlocker_standard').get('locker')) {
+                            alert(Magewire.find('checkout.shipping.method.inpostlocker_standard').get('locker'));
+                        } else {
+                            document.getElementById('inpost_geowidget').hidden = false;
+                        }
                         document.addEventListener('onpointselect', function (event) {
-                            alert(event.details.name);
-                            $set('locker', event.details.name)
+                            Magewire.find('checkout.shipping.method.inpostlocker_standard').set('locker', event.detail.name)
+                            document.getElementById('inpost_geowidget').hidden = true;
+                            document.getElementById('inpost_locker').innerText = event.detail.name;
                         });
                     }
                 });
             }, {once: true})
         })();
+
+        function changeLocker() {
+            document.getElementById('inpost_geowidget').hidden = false;
+        }
     </script>
 
-    <link rel="stylesheet" href="https://geowidget.inpost.pl/inpost-geowidget.css"/>
-    <script src='https://geowidget.inpost.pl/inpost-geowidget.js' defer></script>
+    <div id="inpost_locker"><?= $magewire->locker ?></div>
 
-    <inpost-geowidget onpoint="onpointselect" token='<?= $magewire->getGeoToken() ?>' language='pl'
+    <button onclick="changeLocker()">Change Locker</button>
+
+    <link rel="stylesheet" href="<?= $magewire->getGeoCssUrl() ?>"/>
+    <script src='<?= $magewire->getGeoJsUrl() ?>' defer></script>
+
+    <inpost-geowidget id="inpost_geowidget" hidden="true" onpoint="onpointselect" token='<?= $magewire->getGeoToken() ?>' language='pl'
                       config='parcelcollect'></inpost-geowidget>
 </div>
