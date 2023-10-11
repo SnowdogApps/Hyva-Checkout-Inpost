@@ -6,6 +6,7 @@
     <module name="Snowdog_HyvaCheckoutInpost">
         <sequence>
             <module name="Smartmage_Inpost" />
+            <module name="Hyva_CompatModuleFallback"/>
         </sequence>
     </module>
 </config>
