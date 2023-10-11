@@ -1,45 +1,82 @@
 <?php declare(strict_types=1);
 
+use Hyva\Theme\ViewModel\Modal;
 // phpcs:disable Generic.Files.LineLength
 
 /** @var \Magento\Framework\Escaper $escaper */
 /** @var \Magento\Framework\View\Element\Template $block */
 /** @var \Snowdog\Hyva\Checkout\Inpost\Magewire\Locker $magewire */
 
+/** @var Hyva\Theme\ViewModel\Modal $modalViewModel */
+$modalViewModel = $viewModels->require(Modal::class);
+
+/** @var Hyva\Theme\ViewModel\HeroiconsOutline $heroicons */
+$heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class);
 ?>
-<div>
-    <script>
-        (function () {
-            window.addEventListener('checkout:shipping:method-activate', async () => {
-                hyvaCheckout.shipping.activate('inpostlocker_standard', {
-                    initialize: function () {
-                        if (Magewire.find('checkout.shipping.method.inpostlocker_standard').get('locker')) {
-                            alert(Magewire.find('checkout.shipping.method.inpostlocker_standard').get('locker'));
-                        } else {
-                            document.getElementById('inpost_geowidget').hidden = false;
-                        }
-                        document.addEventListener('onpointselect', function (event) {
-                            Magewire.find('checkout.shipping.method.inpostlocker_standard').set('locker', event.detail.name)
-                            document.getElementById('inpost_geowidget').hidden = true;
-                            document.getElementById('inpost_locker').innerText = event.detail.name;
-                        });
-                    }
-                });
-            }, {once: true})
-        })();
+<script>
+    'use strict';
 
-        function changeLocker() {
-            document.getElementById('inpost_geowidget').hidden = false;
+    const onLockerSelect = (Magewire) => {
+        return (event) => {
+            Magewire.find('checkout.shipping.method.inpostlocker_standard').set('locker', event.detail.name)
+
+            document.getElementById('inpost_locker-code').innerText = event.detail.name;
+            document.getElementById('inpost_locker-address').innerText = event.detail.address.line2;
+            document.getElementById('inpost_locker-city').innerText = event.detail.address.line1;
+            document.getElementById('inpost_locker-info').innerText = event.detail.location_description;
+
+            window.hyva.modal.pop()
         }
-    </script>
+    };
 
-    <div id="inpost_locker"><?= $magewire->locker ?></div>
+    (function () {
+        window.addEventListener('checkout:shipping:method-activate', async () => {
+            hyvaCheckout.shipping.activate('inpostlocker_standard', {
+                initialize: function () {
+                    const geowidget = document.getElementById('inpost_geowidget')
+                    const onPointSelect = onLockerSelect(Magewire)
 
-    <button onclick="changeLocker()">Change Locker</button>
-
-    <link rel="stylesheet" href="<?= $magewire->getGeoCssUrl() ?>"/>
-    <script src='<?= $magewire->getGeoJsUrl() ?>' defer></script>
-
-    <inpost-geowidget id="inpost_geowidget" hidden="true" onpoint="onpointselect" token='<?= $magewire->getGeoToken() ?>' language='pl'
-                      config='parcelcollect'></inpost-geowidget>
+                    geowidget.addEventListener('onpointselect', onPointSelect)
+                }
+            });
+        }, { once: true })
+    })();
+</script>
+<div class="flex flex-col gap-2 mt-3">
+    <?php if($magewire->locker): ?>
+        <span>
+            <?= $escaper->escapeHtml(__('Selected locker')) ?>:
+        </span>
+    <?php endif; ?>
+    <div class="flex flex-row gap-x-2 items-center pl-3">
+        <div
+            id="inpost_locker"
+            class="flex flex-col"
+        >
+            <span
+                id="inpost_locker-code"
+                class="font-semibold"
+            >
+                <?= $magewire->locker ?>
+            </span>
+            <span id="inpost_locker-city"></span>
+            <span id="inpost_locker-address"></span>
+            <span id="inpost_locker-info"></span>
+        </div>
+    </div>
+    <div x-data="hyva.modal()">
+        <?= $modalViewModel
+            ->createModal()
+            ->withTemplate('Snowdog_HyvaCheckoutInpost::geowidget.phtml')
+            ->addDialogClass('relative w-full h-full pt-14 md:max-2xl md:max-h-screen-75 lg:max-w-5xl xl:max-w-7xl')
+        ?>
+        <button
+            @click="show"
+            type="button"
+            class="btn btn-secondary"
+            aria-haspopup="dialog"
+        >
+            <?= $escaper->escapeHtml(__('Choose locker')) ?>
+        </button>
+    </div>
 </div>
