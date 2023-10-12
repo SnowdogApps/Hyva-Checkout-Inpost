@@ -71,7 +71,7 @@ $heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class)
             ->addDialogClass('relative w-full h-full pt-14 md:max-2xl md:max-h-screen-75 lg:max-w-5xl xl:max-w-7xl')
         ?>
         <button
-            @click="show"
+            @click="$nextTick(() => show())"
             type="button"
             class="btn btn-secondary"
             aria-haspopup="dialog"
