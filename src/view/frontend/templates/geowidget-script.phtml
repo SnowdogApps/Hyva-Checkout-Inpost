@@ -8,6 +8,33 @@ use Magento\Framework\View\Element\Template;
 
 $viewModel = $block->getViewModel();
 ?>
+<script>
+    'use strict';
 
+    const onLockerSelect = (Magewire) => {
+        return (event) => {
+            Magewire.find('checkout.shipping.method.inpostlocker_standard').set('locker', event.detail.name)
+
+            document.getElementById('inpost_locker-code').innerText = event.detail.name;
+            document.getElementById('inpost_locker-address').innerText = event.detail.address.line2;
+            document.getElementById('inpost_locker-city').innerText = event.detail.address.line1;
+            document.getElementById('inpost_locker-info').innerText = event.detail.location_description;
+
+            window.hyva.modal.pop()
+        }
+    };
+
+    (function () {
+        window.addEventListener('checkout:shipping:method-activate', async () => {
+            hyvaCheckout.shipping.activate('inpostlocker_standard', {
+                initialize: function () {
+                    const onPointSelect = onLockerSelect(Magewire)
+
+                    document.addEventListener('onpointselect', onPointSelect)
+                }
+            });
+        }, { once: true })
+    })();
+</script>
 <script defer src='<?= $viewModel->getGeoJsUrl() ?>'></script>
 <link rel="stylesheet" type="text/css" href="<?= $viewModel->getGeoCssUrl() ?>"/>

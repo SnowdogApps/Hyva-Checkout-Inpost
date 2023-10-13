@@ -8,6 +8,7 @@
 
 /** @var Hyva\Theme\ViewModel\HeroiconsOutline $heroicons */
 $heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class);
+$token = $block->getData('token');
 ?>
 <div class="relative bg-white w-full h-full">
     <div class="flex pt-8 sm:pt-4">
@@ -24,7 +25,7 @@ $heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class)
         class="block h-full w-full"
         id="inpost_geowidget"
         onpoint="onpointselect"
-        token='<?= $magewire->getGeoToken() ?>'
+        token="<?= $token ?>"
         language='pl'
         config='parcelcollect'
     ></inpost-geowidget>

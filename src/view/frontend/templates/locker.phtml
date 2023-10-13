@@ -13,36 +13,7 @@ $modalViewModel = $viewModels->require(Modal::class);
 /** @var Hyva\Theme\ViewModel\HeroiconsOutline $heroicons */
 $heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class);
 ?>
-<script>
-    'use strict';
-
-    const onLockerSelect = (Magewire) => {
-        return (event) => {
-            Magewire.find('checkout.shipping.method.inpostlocker_standard').set('locker', event.detail.name)
-
-            document.getElementById('inpost_locker-code').innerText = event.detail.name;
-            document.getElementById('inpost_locker-address').innerText = event.detail.address.line2;
-            document.getElementById('inpost_locker-city').innerText = event.detail.address.line1;
-            document.getElementById('inpost_locker-info').innerText = event.detail.location_description;
-
-            window.hyva.modal.pop()
-        }
-    };
-
-    (function () {
-        window.addEventListener('checkout:shipping:method-activate', async () => {
-            hyvaCheckout.shipping.activate('inpostlocker_standard', {
-                initialize: function () {
-                    const geowidget = document.getElementById('inpost_geowidget')
-                    const onPointSelect = onLockerSelect(Magewire)
-
-                    geowidget.addEventListener('onpointselect', onPointSelect)
-                }
-            });
-        }, { once: true })
-    })();
-</script>
-<div class="flex flex-col gap-2 mt-3">
+<div class="flex flex-col gap-2 mt-3" x-data="{}">
     <?php if($magewire->locker): ?>
         <span>
             <?= $escaper->escapeHtml(__('Selected locker')) ?>:
@@ -59,24 +30,23 @@ $heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class)
             >
                 <?= $magewire->locker ?>
             </span>
+
+            <?php
+                // Fields bellow should be added also on backend
+                // After selecting locker, backend returns only locker
+                // code, without information bellow
+            ?>
             <span id="inpost_locker-city"></span>
             <span id="inpost_locker-address"></span>
             <span id="inpost_locker-info"></span>
         </div>
     </div>
-    <div x-data="hyva.modal()">
-        <?= $modalViewModel
-            ->createModal()
-            ->withTemplate('Snowdog_HyvaCheckoutInpost::geowidget.phtml')
-            ->addDialogClass('relative w-full h-full pt-14 md:max-2xl md:max-h-screen-75 lg:max-w-5xl xl:max-w-7xl')
-        ?>
-        <button
-            @click="$nextTick(() => show())"
-            type="button"
-            class="btn btn-secondary"
-            aria-haspopup="dialog"
-        >
-            <?= $escaper->escapeHtml(__('Choose locker')) ?>
-        </button>
-    </div>
+    <button
+        class="w-fit-content btn btn-secondary"
+        @click="$dispatch('open-geowidget')"
+        type="button"
+        aria-haspopup="dialog"
+    >
+        <?= $escaper->escapeHtml(__('Choose locker')) ?>
+    </button>
 </div>

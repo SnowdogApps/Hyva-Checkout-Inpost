@@ -14,5 +14,17 @@
                 </arguments>
             </block>
         </referenceBlock>
+        <referenceContainer name="checkout.shipping.section">
+            <block
+                name="checkout.shipping.method.inpostlocker.init"
+                template="Snowdog_HyvaCheckoutInpost::geowidget-modal.phtml"
+            >
+                <arguments>
+                    <argument name="view_model" xsi:type="object">
+                        Snowdog\Hyva\Checkout\Inpost\Magewire\Locker
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
     </body>
 </page>
