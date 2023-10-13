@@ -10,7 +10,7 @@
             template="Snowdog_HyvaCheckoutInpost::geowidget-script.phtml"
         >
             <arguments>
-                <argument name="magewire" xsi:type="object">
+                <argument name="view_model" xsi:type="object">
                     Snowdog\Hyva\Checkout\Inpost\Magewire\Locker
                 </argument>
             </arguments>

@@ -1,2 +1,13 @@
-<script src='<?= $magewire->getGeoJsUrl() ?>'></script>
-<link rel="stylesheet" href="<?= $magewire->getGeoCssUrl() ?>"/>
+<?php
+declare(strict_types=1);
+
+use Magento\Framework\View\Element\Template;
+
+/** @var Escaper $escaper */
+/** @var Template $block */
+
+$viewModel = $block->getViewModel();
+?>
+
+<script defer src='<?= $viewModel->getGeoJsUrl() ?>'></script>
+<link rel="stylesheet" type="text/css" href="<?= $viewModel->getGeoCssUrl() ?>"/>
