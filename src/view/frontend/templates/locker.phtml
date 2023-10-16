@@ -43,7 +43,7 @@ $heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class)
     </div>
     <button
         class="w-fit-content btn btn-secondary"
-        @click="$dispatch('open-geowidget')"
+        @click="$nextTick(() => $dispatch('open-geowidget'))"
         type="button"
         aria-haspopup="dialog"
     >
