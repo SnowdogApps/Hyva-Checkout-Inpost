@@ -32,13 +32,15 @@ $heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class)
             </span>
 
             <?php
-                // Fields bellow should be added also on backend
-                // After selecting locker, backend returns only locker
-                // code, without information bellow
+                // TODO: Store city, address and info on backend side.
+                // Fields bellow should be added first on backend side.
+                // After selecting locker, backend returns locker
+                // HTML code and changes it, so we need information
+                // here like $magewire->city etc.
             ?>
-            <span id="inpost_locker-city"></span>
+            <!-- <span id="inpost_locker-city"></span>
             <span id="inpost_locker-address"></span>
-            <span id="inpost_locker-info"></span>
+            <span id="inpost_locker-info"></span> -->
         </div>
     </div>
     <button
