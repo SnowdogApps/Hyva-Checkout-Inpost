@@ -1,0 +1,54 @@
+<?php declare(strict_types=1);
+
+use Hyva\Theme\ViewModel\Modal;
+// phpcs:disable Generic.Files.LineLength
+
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Snowdog\Hyva\Checkout\Inpost\Magewire\Locker $magewire */
+
+/** @var Hyva\Theme\ViewModel\Modal $modalViewModel */
+$modalViewModel = $viewModels->require(Modal::class);
+
+/** @var Hyva\Theme\ViewModel\HeroiconsOutline $heroicons */
+$heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class);
+?>
+<div class="flex flex-col gap-2 mt-3" x-data="{}">
+    <?php if($magewire->locker): ?>
+        <span>
+            <?= $escaper->escapeHtml(__('Selected locker')) ?>:
+        </span>
+    <?php endif; ?>
+    <div class="flex flex-row gap-x-2 items-center pl-3">
+        <div
+            id="inpost_locker"
+            class="flex flex-col"
+        >
+            <span
+                id="inpost_locker-code"
+                class="font-semibold"
+            >
+                <?= $magewire->locker ?>
+            </span>
+
+            <?php
+                // TODO: Store city, address and info on backend side.
+                // Fields bellow should be added first on backend side.
+                // After selecting locker, backend returns locker
+                // HTML code and changes it, so we need information
+                // here like $magewire->city etc.
+            ?>
+            <!-- <span id="inpost_locker-city"></span>
+            <span id="inpost_locker-address"></span>
+            <span id="inpost_locker-info"></span> -->
+        </div>
+    </div>
+    <button
+        class="w-fit-content btn btn-secondary"
+        @click="$nextTick(() => $dispatch('open-geowidget'))"
+        type="button"
+        aria-haspopup="dialog"
+    >
+        <?= $escaper->escapeHtml(__('Choose locker')) ?>
+    </button>
+</div>

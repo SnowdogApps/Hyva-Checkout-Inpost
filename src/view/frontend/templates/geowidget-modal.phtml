@@ -1,0 +1,26 @@
+<?php declare(strict_types=1);
+
+use Hyva\Theme\ViewModel\Modal;
+// phpcs:disable Generic.Files.LineLength
+
+/** @var Escaper $escaper */
+/** @var Template $block */
+
+$viewModel = $block->getViewModel();
+
+/** @var Hyva\Theme\ViewModel\Modal $modalViewModel */
+$modalViewModel = $viewModels->require(Modal::class);
+$modal = $modalViewModel
+    ->createModal()
+    ->withTemplate('Snowdog_HyvaCheckoutInpost::geowidget.phtml')
+    ->withDialogRefName('geowidget')
+    ->addDialogClass('relative w-full h-full pt-14 md:max-2xl md:max-h-screen-75 lg:max-w-5xl xl:max-w-7xl');
+$modalBlock = $modal->getContentRenderer();
+$modalBlock->setData('token', $viewModel->getGeoToken());
+?>
+<div
+    x-data="hyva.modal()"
+    @open-geowidget.window="<?= $modal->getShowJs() ?>"
+>
+    <?= $modal ?>
+</div>
