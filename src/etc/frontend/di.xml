@@ -11,4 +11,8 @@
             </argument>
         </arguments>
     </type>
+    <type name="Hyva\Checkout\Model\Magewire\Payment\PlaceOrderServiceInterface">
+        <plugin name="removePickupPointIfNotUsingInPost"
+                type="Snowdog\Hyva\Checkout\Inpost\Plugin\RemovePickupPoint"/>
+    </type>
 </config>
