@@ -37,7 +37,7 @@ class Locker extends Component implements EvaluationInterface
 
     public function getGeoToken(): string
     {
-        return $this->configProvider->getShippingConfigData('geowidget_token');
+        return $this->configProvider->getShippingConfigData('geowidget_token') ?? '';
     }
 
     public function getGeoJsUrl(): string
@@ -45,6 +45,7 @@ class Locker extends Component implements EvaluationInterface
         return match ($this->configProvider->getMode()) {
             'test' => 'https://sandbox-easy-geowidget-sdk.easypack24.net/inpost-geowidget.js',
             'prod' => 'https://geowidget.inpost.pl/inpost-geowidget.js',
+            default => '',
         };
     }
 
@@ -53,6 +54,7 @@ class Locker extends Component implements EvaluationInterface
         return match ($this->configProvider->getMode()) {
             'test' => 'https://sandbox-easy-geowidget-sdk.easypack24.net/inpost-geowidget.css',
             'prod' => 'https://geowidget.inpost.pl/inpost-geowidget.css',
+            default => '',
         };
     }
 
