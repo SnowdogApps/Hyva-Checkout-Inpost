@@ -12,8 +12,6 @@ use Smartmage\Inpost\Model\ConfigProvider;
 
 class Locker extends Component implements EvaluationInterface
 {
-    private Processor $processor;
-
     public ?string $locker = null;
 
     private Session $session;
@@ -21,18 +19,16 @@ class Locker extends Component implements EvaluationInterface
     private ConfigProvider $configProvider;
 
     public function __construct(
-        Processor      $processor,
-        Session        $session,
+        Session $session,
         ConfigProvider $configProvider,
     ) {
-        $this->processor = $processor;
         $this->session = $session;
         $this->configProvider = $configProvider;
     }
 
     public function mount(): void
     {
-        $this->locker = $this->processor->getLockerId();
+        $this->locker = $this->session->getQuote()->getData('inpost_locker_id');
     }
 
     public function getGeoToken(): string
@@ -68,7 +64,14 @@ class Locker extends Component implements EvaluationInterface
             return $resultFactory->createBlocking(__('Please select locker'));
         }
 
-        $this->processor->setLockerId($this->locker);
+        $quote = $this->session->getQuote();
+        $quote->getResource()->getConnection()->update(
+            $quote->getResource()->getMainTable(),
+            [
+                'inpost_locker_id' => $this->locker,
+            ],
+            ['entity_id = ? ' => $quote->getId()]
+        );
 
         return $resultFactory->createSuccess();
     }
