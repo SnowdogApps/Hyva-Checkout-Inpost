@@ -13,17 +13,11 @@ $viewModel = $block->getViewModel();
 
     const onLockerSelect = (Magewire) => {
         return (event) => {
-            Magewire.find('checkout.shipping.method.inpostlocker_standard').set('locker', event.detail.name)
+            var address = [event.detail.address.line1, event.detail.address.line2, event.detail.location_description];
+            Magewire.find('checkout.shipping.method.inpostlocker_standard').select(event.detail.name, address.join("\n"))
 
             document.getElementById('inpost_locker-code').innerText = event.detail.name;
-
-            // TODO: Store city, address and info on backend side.
-            // Fields bellow should be added first on backend side.
-            // After selecting locker, backend returns locker
-            // HTML code and changes it.
-            // document.getElementById('inpost_locker-address').innerText = event.detail.address.line2;
-            // document.getElementById('inpost_locker-city').innerText = event.detail.address.line1;
-            // document.getElementById('inpost_locker-info').innerText = event.detail.location_description;
+            document.getElementById('inpost_locker-address').innerHTML = address.join('<br />');
 
             window.hyva.modal.pop()
         }
