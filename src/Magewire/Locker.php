@@ -73,7 +73,8 @@ class Locker extends Component implements EvaluationInterface
         }
 
         if ($this->locker === null) {
-            return $resultFactory->createBlocking(__('Please select locker'));
+            return $resultFactory->createErrorMessageEvent(__('Please select locker'))
+                ->withCustomEvent('shipping:method:error');
         }
 
         $quote = $this->session->getQuote();
