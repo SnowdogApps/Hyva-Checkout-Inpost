@@ -1,0 +1,8 @@
+<script>
+    hyvaCheckout.evaluation.registerValidator('validateInpostLocker', async (element, component) => {
+        return new Promise(resolve => {
+            let currentLocker = component.get('locker');
+            resolve(null !== currentLocker);
+        })
+    })
+</script>
