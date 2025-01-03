@@ -1,0 +1,8 @@
+<script>
+    window.addEventListener('checkout:init:evaluation', event => {
+        hyvaCheckout.evaluation.registerValidator('validateInpostLocker', (element, component) => {
+            let currentLocker = component.get('locker');
+            return null !== currentLocker;
+        })
+    })
+</script>
