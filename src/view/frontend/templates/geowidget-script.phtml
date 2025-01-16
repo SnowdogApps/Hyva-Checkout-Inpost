@@ -11,29 +11,15 @@ $viewModel = $block->getViewModel();
 <script>
     'use strict';
 
-    const onLockerSelect = (Magewire) => {
-        return (event) => {
-            var address = [event.detail.address.line1, event.detail.address.line2, event.detail.location_description];
-            Magewire.find('checkout.shipping.method.inpostlocker_standard').select(event.detail.name, address.join("\n"))
+    window.onpointselect = (event) =>{
+        const address = [event.address.line1, event.address.line2, event.location_description];
+        Magewire.find('checkout.shipping.method.inpostlocker_standard').select(event.name, address.join("\n"))
 
-            document.getElementById('inpost_locker-code').innerText = event.detail.name;
-            document.getElementById('inpost_locker-address').innerHTML = address.join('<br />');
+        document.getElementById('inpost_locker-code').innerText = event.name;
+        document.getElementById('inpost_locker-address').innerHTML = address.join('<br />');
 
-            window.hyva.modal.pop()
-        }
-    };
-
-    (function () {
-        window.addEventListener('checkout:shipping:method-activate', async () => {
-            hyvaCheckout.shipping.activate('inpostlocker_standard', {
-                initialize: function () {
-                    const onPointSelect = onLockerSelect(Magewire)
-
-                    document.addEventListener('onpointselect', onPointSelect)
-                }
-            });
-        }, { once: true })
-    })();
+        window.hyva.modal.pop()
+    }
 </script>
 <script defer src='<?= $viewModel->getGeoJsUrl() ?>'></script>
 <link rel="stylesheet" type="text/css" href="<?= $viewModel->getGeoCssUrl() ?>"/>
