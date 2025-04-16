@@ -13,7 +13,7 @@ $viewModel = $block->getViewModel();
 
     window.onpointselect = (event) =>{
         const address = [event.address.line1, event.address.line2, event.location_description];
-        Magewire.find('checkout.shipping.method.inpostlocker_standard').select(event.name, address.join("\n"))
+        Magewire.find('checkout.shipping.method.inpostlocker_standard').select(event.name, address.join("\n"), event.address_details)
 
         document.getElementById('inpost_locker-code').innerText = event.name;
         document.getElementById('inpost_locker-address').innerHTML = address.join('<br />');

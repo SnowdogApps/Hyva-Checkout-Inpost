@@ -16,6 +16,8 @@ class Locker extends Component implements EvaluationInterface
 
     public ?string $address = null;
 
+    public ?array $addressDetails = null;
+
     private Session $session;
 
     private ConfigProvider $configProvider;
@@ -33,14 +35,17 @@ class Locker extends Component implements EvaluationInterface
         $this->locker = $this->session->getQuote()->getData('inpost_locker_id');
         if ($this->locker) {
             $this->address = $this->session->getData('inpost_locker_address_' . $this->locker);
+            $this->addressDetails = $this->session->getData('inpost_locker_address_details' . $this->locker);
         }
     }
 
-    public function select(string $locker, string $address): void
+    public function select(string $locker, string $address, array $addressDetails): void
     {
         $this->locker = $locker;
         $this->address = $address;
+        $this->addressDetails = $addressDetails;
         $this->session->setData('inpost_locker_address_' . $locker, $address);
+        $this->session->setData('inpost_locker_address_details' . $locker, $addressDetails);
     }
 
     public function getGeoToken(): string
