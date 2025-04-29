@@ -1,16 +1,17 @@
 <?php
 declare(strict_types=1);
 
+use Hyva\Theme\ViewModel\HyvaCsp;
 use Magento\Framework\View\Element\Template;
 
 /** @var Escaper $escaper */
 /** @var Template $block */
+/** @var HyvaCsp $hyvaCsp */
 
 $viewModel = $block->getViewModel();
 ?>
 <script>
     'use strict';
-
     window.onpointselect = (event) =>{
         const address = [event.address.line1, event.address.line2, event.location_description];
         Magewire.find('checkout.shipping.method.inpostlocker_standard').select(event.name, address.join("\n"))
@@ -21,5 +22,9 @@ $viewModel = $block->getViewModel();
         window.hyva.modal.pop()
     }
 </script>
+<?php $hyvaCsp->registerInlineScript() ?>
+
 <script defer src='<?= $viewModel->getGeoJsUrl() ?>'></script>
+<?php $hyvaCsp->registerInlineScript() ?>
+
 <link rel="stylesheet" type="text/css" href="<?= $viewModel->getGeoCssUrl() ?>"/>

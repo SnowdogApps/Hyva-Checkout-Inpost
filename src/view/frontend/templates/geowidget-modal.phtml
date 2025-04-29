@@ -19,8 +19,8 @@ $modalBlock = $modal->getContentRenderer();
 $modalBlock->setData('token', $viewModel->getGeoToken());
 ?>
 <div
-    x-data="hyva.modal()"
-    @open-geowidget.window="<?= $modal->getShowJs() ?>"
+    x-data="inpostModal"
+    @open-geowidget.window="showInpostModal"
 >
     <?= $modal ?>
 </div>
