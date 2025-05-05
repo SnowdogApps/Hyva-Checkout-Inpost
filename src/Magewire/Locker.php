@@ -6,6 +6,7 @@ use Hyva\Checkout\Model\Magewire\Component\EvaluationInterface;
 use Hyva\Checkout\Model\Magewire\Component\EvaluationResultFactory;
 use Hyva\Checkout\Model\Magewire\Component\EvaluationResultInterface;
 use Magento\Checkout\Model\Session;
+use Magento\Quote\Api\CartRepositoryInterface;
 use Magewirephp\Magewire\Component;
 use Smartmage\Inpost\Model\Checkout\Processor;
 use Smartmage\Inpost\Model\ConfigProvider;
@@ -20,12 +21,16 @@ class Locker extends Component implements EvaluationInterface
 
     private ConfigProvider $configProvider;
 
+    private CartRepositoryInterface $quoteRepository;
+
     public function __construct(
         Session $session,
         ConfigProvider $configProvider,
+        CartRepositoryInterface $quoteRepository,
     ) {
         $this->session = $session;
         $this->configProvider = $configProvider;
+        $this->quoteRepository = $quoteRepository;
     }
 
     public function mount(): void
@@ -40,7 +45,11 @@ class Locker extends Component implements EvaluationInterface
     {
         $this->locker = $locker;
         $this->address = $address;
+        $quote = $this->session->getQuote();
+
         $this->session->setData('inpost_locker_address_' . $locker, $address);
+        $quote->setData('inpost_locker_id', $locker);
+        $this->quoteRepository->save($quote);
     }
 
     public function getGeoToken(): string
