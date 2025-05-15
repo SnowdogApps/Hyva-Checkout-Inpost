@@ -1,8 +1,22 @@
+<?php
+use Hyva\Theme\ViewModel\HyvaCsp;
+
+/** @var HyvaCsp $hyvaCsp */
+?>
+
 <script>
-    window.addEventListener('checkout:init:evaluation', event => {
-        hyvaCheckout.evaluation.registerValidator('validateInpostLocker', (element, component) => {
-            let currentLocker = component.get('locker');
-            return null !== currentLocker;
-        })
-    })
+    <?php // For some reason 'checkout:init:evaluation' is too late, so we use 'checkout:init:main' instead ?>
+    window.addEventListener('checkout:init:main', event => {
+        hyvaCheckout.evaluation.registerValidator('validateInpostLocker', async (element, component) => {
+            return new Promise((resolve, reject) => {
+                let currentLocker = component.get('locker');
+                if (null !== currentLocker) {
+                    resolve(true);
+                } else {
+                    reject(false);
+                }
+            });
+        });
+    });
 </script>
+<?php $hyvaCsp->registerInlineScript() ?>

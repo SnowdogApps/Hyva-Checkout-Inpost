@@ -1,0 +1,52 @@
+<?php
+use Hyva\Theme\ViewModel\HyvaCsp;
+
+/** @var HyvaCsp $hyvaCsp */
+?>
+
+<script>
+    const inpostMethodCode = 'inpostlocker_standard';
+    function inpostModal() {
+        return Object.assign(
+            hyva.modal(),
+            {
+                showInpostModal() {
+                    this.show('geowidget');
+                },
+                hideInpostModal() {
+                    this.hide('geowidget');
+                },
+            }
+        );
+    }
+    function inpostGeowidget() {
+        return {
+            openInpostModal() {
+                this.$dispatch('open-geowidget');
+            },
+            initInpostGeowidget() {
+                this.$el.dataset.init = '1';
+            }
+        };
+    }
+    window.addEventListener('alpine:init', () => {
+        Alpine.data('inpostModal', inpostModal);
+        Alpine.data('inpostGeowidget', inpostGeowidget);
+
+        // workaround Alpine.js problem with initialisation of x-data when changing method
+        // https://github.com/alpinejs/alpine/pull/4509
+        // https://github.com/alpinejs/alpine/discussions/4470
+        // TODO: fix in future updates
+        window.addEventListener('checkout:shipping:method-activate', async (event) => {
+            if (event.detail.method === inpostMethodCode) {
+                const inpostModal = document.getElementById('inpost-geowidget');
+                const isInitialized = inpostModal.dataset.init === '1';
+                if (!isInitialized) {
+                    Alpine.start('inpostModal');
+                    Alpine.start('inpostGeowidget');
+                }
+            }
+        })
+    }, {once: true});
+</script>
+<?php $hyvaCsp->registerInlineScript() ?>
