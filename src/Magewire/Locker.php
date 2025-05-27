@@ -8,10 +8,16 @@ use Hyva\Checkout\Model\Magewire\Component\EvaluationResultInterface;
 use Magento\Checkout\Model\Session;
 use Magewirephp\Magewire\Component;
 use Smartmage\Inpost\Model\Checkout\Processor;
+use Smartmage\Inpost\Model\Config\Source\DefaultWaySending;
 use Smartmage\Inpost\Model\ConfigProvider;
 
 class Locker extends Component implements EvaluationInterface
 {
+    private const INPOST_METHOD_CODES = [
+        DefaultWaySending::INPOST_LOCKER_STANDARD,
+        DefaultWaySending::INPOST_LOCKER_STANDARD_COD
+    ];
+
     public ?string $locker = null;
 
     public ?string $address = null;
@@ -68,7 +74,7 @@ class Locker extends Component implements EvaluationInterface
 
     public function evaluateCompletion(EvaluationResultFactory $resultFactory): EvaluationResultInterface
     {
-        if ($this->session->getQuote()->getShippingAddress()->getShippingMethod() != 'inpostlocker_standard') {
+        if (!in_array($this->session->getQuote()->getShippingAddress()->getShippingMethod(), self::INPOST_METHOD_CODES)) {
             return $resultFactory->createSuccess();
         }
 

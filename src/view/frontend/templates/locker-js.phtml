@@ -5,7 +5,8 @@ use Hyva\Theme\ViewModel\HyvaCsp;
 ?>
 
 <script>
-    const inpostMethodCode = 'inpostlocker_standard';
+    const inpostStandardMethodCode = 'inpostlocker_standard';
+    const inpostStandardCodMethodCode = 'inpostlocker_standardcod';
     function inpostModal() {
         return Object.assign(
             hyva.modal(),
@@ -38,7 +39,14 @@ use Hyva\Theme\ViewModel\HyvaCsp;
         // https://github.com/alpinejs/alpine/discussions/4470
         // TODO: fix in future updates
         window.addEventListener('checkout:shipping:method-activate', async (event) => {
-            if (event.detail.method === inpostMethodCode) {
+            if (event.detail.method === inpostStandardMethodCode) {
+                const inpostModal = document.getElementById('inpost-geowidget');
+                const isInitialized = inpostModal.dataset.init === '1';
+                if (!isInitialized) {
+                    Alpine.start('inpostModal');
+                    Alpine.start('inpostGeowidget');
+                }
+            } else if (event.detail.method === inpostStandardCodMethodCode) {
                 const inpostModal = document.getElementById('inpost-geowidget');
                 const isInitialized = inpostModal.dataset.init === '1';
                 if (!isInitialized) {

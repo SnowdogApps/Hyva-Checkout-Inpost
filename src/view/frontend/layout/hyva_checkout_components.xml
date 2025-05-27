@@ -14,6 +14,18 @@
                 </arguments>
             </block>
         </referenceBlock>
+        <referenceBlock name="checkout.shipping.methods">
+            <block name="checkout.shipping.method.inpostlocker_standardcod"
+                   as="inpostlocker_standardcod"
+                   template="Snowdog_HyvaCheckoutInpost::locker.phtml">
+                <arguments>
+                    <argument name="magewire" xsi:type="object">
+                        Snowdog\Hyva\Checkout\Inpost\Magewire\Locker
+                    </argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+
         <referenceContainer name="checkout.shipping.section">
             <block
                 name="checkout.shipping.method.inpostlocker.init"
