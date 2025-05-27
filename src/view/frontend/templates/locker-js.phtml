@@ -47,7 +47,7 @@ use Hyva\Theme\ViewModel\HyvaCsp;
                     Alpine.start('inpostGeowidget');
                 }
             } else if (event.detail.method === inpostStandardCodMethodCode) {
-                const inpostModal = document.getElementById('inpost-geowidget');
+                const inpostModal = document.getElementById('inpost-geowidget-cod');
                 const isInitialized = inpostModal.dataset.init === '1';
                 if (!isInitialized) {
                     Alpine.start('inpostModal');
