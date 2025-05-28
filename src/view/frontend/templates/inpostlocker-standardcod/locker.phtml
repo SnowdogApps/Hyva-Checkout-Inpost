@@ -1,0 +1,59 @@
+<?php declare(strict_types=1);
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\HeroiconsOutline;
+use Hyva\Theme\ViewModel\Modal;
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+use Snowdog\Hyva\Checkout\Inpost\Magewire\Locker;
+
+// phpcs:disable Generic.Files.LineLength
+
+/** @var Escaper $escaper */
+/** @var Template $block */
+/** @var Locker $magewire */
+/** @var ViewModelRegistry $viewModels */
+
+/** @var Hyva\Theme\ViewModel\Modal $modalViewModel */
+$modalViewModel = $viewModels->require(Modal::class);
+
+/** @var Hyva\Theme\ViewModel\HeroiconsOutline $heroicons */
+$heroIcons = $viewModels->require(HeroiconsOutline::class);
+?>
+<div
+    id="inpost-geowidget-cod"
+    class="flex flex-col gap-2 mt-3"
+    x-data="inpostGeowidget"
+    x-init="initInpostGeowidget"
+    data-init="0"
+>
+    <?php if($magewire->locker): ?>
+        <span>
+            <?= $escaper->escapeHtml(__('Selected locker')) ?>:
+        </span>
+    <?php endif; ?>
+    <div class="flex flex-row gap-x-2 items-center">
+        <div
+            id="inpost_locker"
+            class="flex flex-col"
+        >
+            <span
+                id="inpost_locker-code"
+                class="font-semibold"
+            >
+                <?= $magewire->locker ?>
+            </span>
+            <span id="inpost_locker-address">
+                <?= nl2br($magewire->address ?? '') ?>
+            </span>
+        </div>
+    </div>
+    <button
+        class="w-fit-content btn btn-secondary"
+        @click="openInpostModal"
+        type="button"
+        aria-haspopup="dialog"
+    >
+        <?= $escaper->escapeHtml(__('Choose locker')) ?>
+    </button>
+</div>
