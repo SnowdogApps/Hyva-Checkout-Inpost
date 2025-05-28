@@ -36,6 +36,7 @@
                             <item name="src" xsi:type="string">Smartmage_Inpost::images/inpost_paczkomat_logo.png</item>
                             <item name="attributes" xsi:type="array">
                                 <item name="width" xsi:type="number">120</item>
+                                <item name="loading" xsi:type="string">lazy</item>
                                 <item name="alt" xsi:type="string" translate="true">Inpost logo</item>
                             </item>
                         </item>
