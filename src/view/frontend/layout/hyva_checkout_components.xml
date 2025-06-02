@@ -45,7 +45,7 @@
 
         <referenceContainer name="checkout.shipping.section">
             <block
-                name="checkout.shipping.method.inpostlocker.init"
+                name="checkout.shipping.method.inpostlocker.modal.standard"
                 template="Snowdog_HyvaCheckoutInpost::inpostlocker_standard/geowidget-modal.phtml"
             >
                 <arguments>
@@ -55,7 +55,7 @@
                 </arguments>
             </block>
             <block
-                name="checkout.shipping.method.inpostlocker.init"
+                name="checkout.shipping.method.inpostlocker.modal.cod"
                 template="Snowdog_HyvaCheckoutInpost::inpostlocker-standardcod/geowidget-modal.phtml"
             >
                 <arguments>
@@ -69,16 +69,6 @@
         <referenceContainer name="magewire.plugin.scripts">
             <block
                 name="checkout.shipping.method.inpostlocker_standard.script"
-                template="Snowdog_HyvaCheckoutInpost::locker-js.phtml"
-            >
-                <arguments>
-                    <argument name="magewire" xsi:type="object">
-                        Snowdog\Hyva\Checkout\Inpost\Magewire\Locker
-                    </argument>
-                </arguments>
-            </block>
-            <block
-                name="checkout.shipping.method.inpostlocker_standardcod.script"
                 template="Snowdog_HyvaCheckoutInpost::locker-js.phtml"
             >
                 <arguments>
