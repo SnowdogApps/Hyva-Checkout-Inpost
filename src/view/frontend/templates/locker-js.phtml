@@ -27,7 +27,7 @@ use Hyva\Theme\ViewModel\HyvaCsp;
                 this.$dispatch('open-geowidget');
             },
             initInpostGeowidget() {
-                this.$el.dataset.init = '1';
+                Alpine.store('inpost').initialized.inpostlocker_standard = true;
             }
         };
     }
@@ -51,11 +51,17 @@ use Hyva\Theme\ViewModel\HyvaCsp;
                 this.$dispatch('open-geowidget-cod');
             },
             initInpostGeowidgetCod() {
-                this.$el.dataset.init = '1';
+                Alpine.store('inpost').initialized.inpostlocker_standardcod = true;
             }
         };
     }
     window.addEventListener('alpine:init', () => {
+        Alpine.store('inpost', {
+            initialized: {
+                inpostlocker_standard: false,
+                inpostlocker_standardcod: false,
+            }
+        });
         Alpine.data('inpostModal', inpostModal);
         Alpine.data('inpostModalCod', inpostModalCod);
         Alpine.data('inpostGeowidget', inpostGeowidget);
@@ -66,25 +72,20 @@ use Hyva\Theme\ViewModel\HyvaCsp;
         // https://github.com/alpinejs/alpine/discussions/4470
         // TODO: fix in future updates
         window.addEventListener('checkout:shipping:method-activate', async (event) => {
-            console.log('checkout:shipping:method-activate', event.detail.method);
             if (event.detail.method === inpostStandardMethodCode) {
-                const inpostModal = document.getElementById('inpost-geowidget');
-                const isInitialized = inpostModal.dataset.init === '1';
+                const isInitialized = Alpine.store('inpost').initialized.inpostlocker_standard;
                 if (!isInitialized) {
-                    console.log("%c not initialized inpost-geowidget", "font-size: 24px; font-weight: bold; color: blue;");
-                    Alpine.start('inpostModal');
                     Alpine.start('inpostGeowidget');
                 }
-            } else if (event.detail.method === inpostStandardCodMethodCode) {
-                const inpostModal = document.getElementById('inpost-geowidget-cod');
-                const isInitialized = inpostModal.dataset.init === '1';
+            }
+            else if (event.detail.method === inpostStandardCodMethodCode) {
+                const isInitialized = Alpine.store('inpost').initialized.inpostlocker_standardcod;
                 if (!isInitialized) {
-                    console.log("%c not initialized inpost-geowidget-cod", "font-size: 24px; font-weight: bold; color: blue;");
-                    Alpine.start('inpostModalCod');
                     Alpine.start('inpostGeowidgetCod');
                 }
             }
         })
     }, {once: true});
+
 </script>
 <?php $hyvaCsp->registerInlineScript() ?>
