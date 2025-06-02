@@ -67,6 +67,16 @@
                     </argument>
                 </arguments>
             </block>
+            <block
+                name="checkout.shipping.method.inpostlocker_standardcod.script"
+                template="Snowdog_HyvaCheckoutInpost::locker-js.phtml"
+            >
+                <arguments>
+                    <argument name="magewire" xsi:type="object">
+                        Snowdog\Hyva\Checkout\Inpost\Magewire\Locker
+                    </argument>
+                </arguments>
+            </block>
         </referenceContainer>
     </body>
 </page>
