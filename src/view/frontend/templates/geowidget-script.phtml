@@ -24,6 +24,20 @@ $viewModel = $block->getViewModel();
 </script>
 <?php $hyvaCsp->registerInlineScript() ?>
 
+<script>
+    'use strict';
+    window.onpointselectCod = (event) =>{
+        const address = [event.address.line1, event.address.line2, event.location_description];
+        Magewire.find('checkout.shipping.method.inpostlocker_standardcod').select(event.name, address.join("\n"))
+
+        document.getElementById('inpost_locker-code').innerText = event.name;
+        document.getElementById('inpost_locker-address').innerHTML = address.join('<br />');
+
+        window.hyva.modal.pop()
+    }
+</script>
+<?php $hyvaCsp->registerInlineScript() ?>
+
 <script defer src='<?= $viewModel->getGeoJsUrl() ?>'></script>
 <?php $hyvaCsp->registerInlineScript() ?>
 

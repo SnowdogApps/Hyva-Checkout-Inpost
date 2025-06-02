@@ -16,7 +16,7 @@ $viewModel = $block->getViewModel();
 $modalViewModel = $viewModels->require(Modal::class);
 $modal = $modalViewModel
     ->createModal()
-    ->withTemplate('Snowdog_HyvaCheckoutInpost::geowidget.phtml')
+    ->withTemplate('Snowdog_HyvaCheckoutInpost::inpostlocker_standard/geowidget.phtml')
     ->withDialogRefName('geowidget')
     ->addDialogClass('relative w-full h-full pt-14 md:max-2xl md:max-h-screen-75 lg:max-w-5xl xl:max-w-7xl');
 $modalBlock = $modal->getContentRenderer();

@@ -6,7 +6,7 @@
         <referenceBlock name="checkout.shipping.methods">
             <block name="checkout.shipping.method.inpostlocker_standard"
                    as="inpostlocker_standard"
-                   template="Snowdog_HyvaCheckoutInpost::locker.phtml">
+                   template="Snowdog_HyvaCheckoutInpost::inpostlocker_standard/locker.phtml">
                 <arguments>
                     <argument name="magewire" xsi:type="object">
                         Snowdog\Hyva\Checkout\Inpost\Magewire\Locker
@@ -46,7 +46,17 @@
         <referenceContainer name="checkout.shipping.section">
             <block
                 name="checkout.shipping.method.inpostlocker.init"
-                template="Snowdog_HyvaCheckoutInpost::geowidget-modal.phtml"
+                template="Snowdog_HyvaCheckoutInpost::inpostlocker_standard/geowidget-modal.phtml"
+            >
+                <arguments>
+                    <argument name="view_model" xsi:type="object">
+                        Snowdog\Hyva\Checkout\Inpost\Magewire\Locker
+                    </argument>
+                </arguments>
+            </block>
+            <block
+                name="checkout.shipping.method.inpostlocker.init"
+                template="Snowdog_HyvaCheckoutInpost::inpostlocker-standardcod/geowidget-modal.phtml"
             >
                 <arguments>
                     <argument name="view_model" xsi:type="object">

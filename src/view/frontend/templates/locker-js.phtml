@@ -20,10 +20,26 @@ use Hyva\Theme\ViewModel\HyvaCsp;
             }
         );
     }
+    function inpostModalCod() {
+        return Object.assign(
+            hyva.modal(),
+            {
+                showInpostModalCod() {
+                    this.show('geowidget-cod');
+                },
+                hideInpostModalCod() {
+                    this.hide('geowidget-cod');
+                },
+            }
+        );
+    }
     function inpostGeowidget() {
         return {
             openInpostModal() {
                 this.$dispatch('open-geowidget');
+            },
+            openInpostModalCod() {
+                this.$dispatch('open-geowidget-cod');
             },
             initInpostGeowidget() {
                 this.$el.dataset.init = '1';
@@ -32,6 +48,7 @@ use Hyva\Theme\ViewModel\HyvaCsp;
     }
     window.addEventListener('alpine:init', () => {
         Alpine.data('inpostModal', inpostModal);
+        Alpine.data('inpostModalCod', inpostModalCod);
         Alpine.data('inpostGeowidget', inpostGeowidget);
 
         // workaround Alpine.js problem with initialisation of x-data when changing method
