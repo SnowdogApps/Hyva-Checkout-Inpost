@@ -1,0 +1,32 @@
+<?php declare(strict_types=1);
+
+// phpcs:disable Generic.Files.LineLength
+
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Snowdog\Hyva\Checkout\Inpost\Magewire\Locker $magewire */
+
+/** @var Hyva\Theme\ViewModel\HeroiconsOutline $heroicons */
+$heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class);
+$token = $block->getData('token');
+?>
+<div class="relative bg-white w-full h-full">
+    <div class="flex pt-8 sm:pt-4">
+        <button
+            @click="hide"
+            type="button"
+            class="absolute flex justify-end p-5 self-end mb-1 -right-6"
+            aria-label="<?= $escaper->escapeHtmlAttr(__('Close')) ?>"
+        >
+            <?= $heroIcons->xHtml('w-7 h-7', null, null, ['aria-hidden' => 'true']); ?>
+        </button>
+    </div>
+    <inpost-geowidget
+        class="block h-full w-full"
+        id="inpost_geowidget"
+        onpoint="onpointselectCod"
+        token="<?= $token ?>"
+        language='pl'
+        config='parcelcollectpayment'
+    ></inpost-geowidget>
+</div>

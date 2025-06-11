@@ -5,7 +5,9 @@ use Hyva\Theme\ViewModel\HyvaCsp;
 ?>
 
 <script>
-    const inpostMethodCode = 'inpostlocker_standard';
+    const inpostStandardMethodCode = 'inpostlocker_standard';
+    const inpostStandardCodMethodCode = 'inpostlocker_standardcod';
+    // STANDARD
     function inpostModal() {
         return Object.assign(
             hyva.modal(),
@@ -25,28 +27,65 @@ use Hyva\Theme\ViewModel\HyvaCsp;
                 this.$dispatch('open-geowidget');
             },
             initInpostGeowidget() {
-                this.$el.dataset.init = '1';
+                Alpine.store('inpost').initialized.inpostlocker_standard = true;
+            }
+        };
+    }
+    // COD
+    function inpostModalCod() {
+        return Object.assign(
+            hyva.modal(),
+            {
+                showInpostModalCod() {
+                    this.show('geowidget-cod');
+                },
+                hideInpostModalCod() {
+                    this.hide('geowidget-cod');
+                },
+            }
+        );
+    }
+    function inpostGeowidgetCod() {
+        return {
+            openInpostModalCod() {
+                this.$dispatch('open-geowidget-cod');
+            },
+            initInpostGeowidgetCod() {
+                Alpine.store('inpost').initialized.inpostlocker_standardcod = true;
             }
         };
     }
     window.addEventListener('alpine:init', () => {
+        Alpine.store('inpost', {
+            initialized: {
+                inpostlocker_standard: false,
+                inpostlocker_standardcod: false,
+            }
+        });
         Alpine.data('inpostModal', inpostModal);
+        Alpine.data('inpostModalCod', inpostModalCod);
         Alpine.data('inpostGeowidget', inpostGeowidget);
+        Alpine.data('inpostGeowidgetCod', inpostGeowidgetCod);
 
         // workaround Alpine.js problem with initialisation of x-data when changing method
         // https://github.com/alpinejs/alpine/pull/4509
         // https://github.com/alpinejs/alpine/discussions/4470
         // TODO: fix in future updates
         window.addEventListener('checkout:shipping:method-activate', async (event) => {
-            if (event.detail.method === inpostMethodCode) {
-                const inpostModal = document.getElementById('inpost-geowidget');
-                const isInitialized = inpostModal.dataset.init === '1';
+            if (event.detail.method === inpostStandardMethodCode) {
+                const isInitialized = Alpine.store('inpost').initialized.inpostlocker_standard;
                 if (!isInitialized) {
-                    Alpine.start('inpostModal');
                     Alpine.start('inpostGeowidget');
+                }
+            }
+            else if (event.detail.method === inpostStandardCodMethodCode) {
+                const isInitialized = Alpine.store('inpost').initialized.inpostlocker_standardcod;
+                if (!isInitialized) {
+                    Alpine.start('inpostGeowidgetCod');
                 }
             }
         })
     }, {once: true});
+
 </script>
 <?php $hyvaCsp->registerInlineScript() ?>
