@@ -6,6 +6,7 @@ use Hyva\Theme\ViewModel\Modal;
 /** @var \Magento\Framework\Escaper $escaper */
 /** @var \Magento\Framework\View\Element\Template $block */
 /** @var \Snowdog\Hyva\Checkout\Inpost\Magewire\Locker $magewire */
+/** @var \Hyva\Theme\Model\ViewModelRegistry $viewModels */
 
 /** @var Hyva\Theme\ViewModel\Modal $modalViewModel */
 $modalViewModel = $viewModels->require(Modal::class);
@@ -18,7 +19,6 @@ $heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class)
     class="flex flex-col gap-2 mt-3"
     x-data="inpostGeowidget"
     x-init="initInpostGeowidget"
-    data-init="0"
 >
     <?php if($magewire->locker): ?>
         <span>
