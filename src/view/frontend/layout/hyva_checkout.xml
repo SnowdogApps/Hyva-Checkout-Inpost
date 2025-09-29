@@ -8,6 +8,7 @@
             name="hyva-checkout.snowdog.inpost.geowidget"
             after="-"
             template="Snowdog_HyvaCheckoutInpost::geowidget-script.phtml"
+            ifconfig="carriers/inpostlocker/active"
         >
             <arguments>
                 <argument name="view_model" xsi:type="object">

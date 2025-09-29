@@ -71,11 +71,6 @@
                 name="checkout.shipping.method.inpostlocker_standard.script"
                 template="Snowdog_HyvaCheckoutInpost::locker-js.phtml"
             >
-                <arguments>
-                    <argument name="magewire" xsi:type="object">
-                        Snowdog\Hyva\Checkout\Inpost\Magewire\Locker
-                    </argument>
-                </arguments>
             </block>
         </referenceContainer>
     </body>
