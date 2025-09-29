@@ -60,7 +60,7 @@ class Locker extends Component implements EvaluationInterface
 
     public function getGeoToken(): string
     {
-        return $this->configProvider->getShippingConfigData('geowidget_token') ?? '';
+        return $this->configProvider->getGeowidgetToken() ?? '';
     }
 
     public function getGeoJsUrl(): string
