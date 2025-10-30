@@ -1,6 +1,6 @@
 # Hyvä Checkout Inpost
 
-Hyvä Magewire Checkout compatibility module for `smartmage/module-inpost-paczkomaty`
+Hyvä Magewire Checkout compatibility module for `smartmage/inpost`
 
 ## Hyvä Checkout
 
