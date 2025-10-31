@@ -3,7 +3,7 @@
 	"description": "Hyva Checkout compatybility module for Inpost",
 	"type": "magento2-module",
 	"require": {
-		"smartmage/module-inpost-paczkomaty": "*"
+		"smartmage/inpost": "*"
 	},
 	"autoload": {
 		"files": [
