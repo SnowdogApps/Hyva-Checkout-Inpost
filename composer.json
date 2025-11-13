@@ -1,16 +1,17 @@
 {
-	"name": "snowdog/module-hyva-checkout-inpost",
-	"description": "Hyva Checkout compatybility module for Inpost",
-	"type": "magento2-module",
-	"require": {
-		"smartmage/inpost": "*"
-	},
-	"autoload": {
-		"files": [
-			"src/registration.php"
-		],
-		"psr-4": {
-			"Snowdog\\Hyva\\Checkout\\Inpost\\": "src"
-		}
-	}
+  "name": "snowdog/module-hyva-checkout-inpost",
+  "description": "Hyva Checkout compatybility module for Inpost",
+  "type": "magento2-module",
+  "require": {
+    "smartmage/inpost": "*",
+    "hyva-themes/magento2-theme-module": "^1.3.11"
+  },
+  "autoload": {
+    "files": [
+      "src/registration.php"
+    ],
+    "psr-4": {
+      "Snowdog\\Hyva\\Checkout\\Inpost\\": "src"
+    }
+  }
 }
