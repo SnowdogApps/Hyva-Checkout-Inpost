@@ -23,7 +23,7 @@ $heroIcons = $viewModels->require(HeroiconsOutline::class);
 <div
     id="inpost-geowidget-cod"
     class="flex flex-col gap-2 mt-3"
-    x-data="inpostGeowidgetCod"
+    x-data="snowdogHyvaCheckoutInpostInpostlockerStandardcodLocker"
 >
     <?php if($magewire->locker): ?>
         <span>
@@ -55,3 +55,13 @@ $heroIcons = $viewModels->require(HeroiconsOutline::class);
         <?= $escaper->escapeHtml(__('Choose locker')) ?>
     </button>
 </div>
+<script>
+<?php /** Generated with hyva-csp-helper.php */ ?>
+function snowdogHyvaCheckoutInpostInpostlockerStandardcodLocker() {
+    return Object.assign(
+        inpostGeowidgetCod.call(this)
+    )
+}
+window.addEventListener('alpine:init', () => Alpine.data('snowdogHyvaCheckoutInpostInpostlockerStandardcodLocker', snowdogHyvaCheckoutInpostInpostlockerStandardcodLocker), {once: true});
+</script>
+<?php $hyvaCsp->registerInlineScript() ?>
