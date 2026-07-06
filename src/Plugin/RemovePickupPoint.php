@@ -10,8 +10,9 @@ class RemovePickupPoint
     public function beforePlaceOrder(PlaceOrderServiceInterface $subject, Quote $quote): array
     {
         $attributes = $quote->getExtensionAttributes();
-        $lockerId = $attributes->getInpostLockerId();
-        if (!str_starts_with($quote->getShippingAddress()->getShippingMethod(), 'inpostlocker_') && !empty($lockerId)) {
+        $shippingMethod = $quote->getShippingAddress()->getShippingMethod() ?? '';
+
+        if (!str_starts_with($shippingMethod, 'inpostlocker_')) {
             $attributes->setInpostLockerId(null);
             $quote->setExtensionAttributes($attributes);
             $quote->setInpostLockerId(null);
