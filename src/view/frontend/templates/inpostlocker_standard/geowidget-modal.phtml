@@ -23,8 +23,18 @@ $modalBlock = $modal->getContentRenderer();
 $modalBlock->setData('token', $viewModel->getGeoToken());
 ?>
 <div
-    x-data="inpostModal"
+    x-data="snowdogHyvaCheckoutInpostInpostlockerStandardGeowidgetModal"
     @open-geowidget.window="showInpostModal"
 >
     <?= $modal ?>
 </div>
+<script>
+<?php /** Generated with hyva-csp-helper.php */ ?>
+function snowdogHyvaCheckoutInpostInpostlockerStandardGeowidgetModal() {
+    return Object.assign(
+        inpostModal.call(this)
+    )
+}
+window.addEventListener('alpine:init', () => Alpine.data('snowdogHyvaCheckoutInpostInpostlockerStandardGeowidgetModal', snowdogHyvaCheckoutInpostInpostlockerStandardGeowidgetModal), {once: true});
+</script>
+<?php $hyvaCsp->registerInlineScript() ?>
