@@ -33,7 +33,7 @@ class ConvertQuoteToOrder implements ObserverInterface
         /** @var Order $order */
         $order = $observer->getOrder();
 
-        $methodCode = $order->getShippingMethod();
+        $methodCode = $order->getShippingMethod() ?? '';
         if (!str_starts_with($methodCode, 'inpostlocker_')) {
             return;
         }
